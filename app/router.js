@@ -10,6 +10,7 @@ Router.map(function() {
   this.route('user', function() {
     this.route('login');
   });
+  this.route('404');
 });
 
 export default Router;

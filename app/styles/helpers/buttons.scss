@@ -1,0 +1,29 @@
+button.button, a.button{
+	font-size: 1rem;
+	border: 0px;
+	&.small {
+	  padding: 11px 0;
+	  width: 200px;
+	}
+	&.medium {
+	  padding: 11px 0;
+	  width: 250px;
+	}
+	&.large {
+	  padding: 11px 0;
+	  width: 300px;
+	}
+	&.xlarge {
+	  padding: 11px 0;
+	  width: 350px;
+	  max-width:100%;
+	}
+	&:hover{ cursor:pointer; }
+	&.red{
+		background-color: #cc2926;
+	}
+	&.darkGray{
+		background-color: $offwhite;
+		color: white;
+	}
+}

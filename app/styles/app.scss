@@ -8,7 +8,7 @@
    	v2.0 | 20110126
    	License: none (public domain)
 */
-
+@charset "UTF-8";
 html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video  {
 	margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; 
 	font-family: 'Helvetica';}
@@ -25,7 +25,7 @@ button:focus {outline: 0;}
 
 /* Global Constants */
 /*$white: 				rgba(255, 255, 255, 1);*/
-$white:						rgba(248, 248, 248, 1);
+$offwhite:						rgba(248, 248, 248, 1);
 $infectious_red: 	rgba(90, 19, 17, 1);
 $light_blue: 			rgba(60, 181, 250, 1);
 $light_green: 		rgba(129, 249, 59, 1);
@@ -35,12 +35,20 @@ $light_gray:      rgba(241, 242, 242, 1);
 
 /* Imports */
 @import "helpers/fonts";
-
+@import "helpers/buttons";
+@import "helpers/animate";
 
 /* Global Styles */
 *.pull-right{ float: right; }
 *.pull-left{ float: left; }
 *.clickable{ cursor: pointer; }
+
+.clearfix:after,
+.clearfix:before {
+  content: "";
+  display: table; }
+.clearfix:after { clear: both; }
+
 
 @media only screen and (min-width: 500px) {
 	.mobile-view{ display: none; }
@@ -83,16 +91,17 @@ text-decoration:none;
 
 div#Navigation{
 	z-index: 1;
-	width: 100%;
-	height: auto;
-	position: fixed;
-	background-color: $white;
-	border-bottom: 1px solid gray;
+	height: 70px;
+	background-color: white;
+	border-bottom: 1px solid #eee;
 	/*box-shadow: 0px .5px 20px .1px $infectious_red;*/
 	div.main-nav{
 		height: 70px;
+    width: 100%;
 		padding-left: 60px;
 		padding-right: 60px;
+    position: fixed;
+    background-color: white;
 		ul.nav{
 			margin: 0;
 			padding: 0;
@@ -110,6 +119,7 @@ div#Navigation{
         	padding-left:0;
         	a.main-link { 
         		color: $dark_gray;
+            padding-bottom: 3px;
         	}
       	}
      		&:hover{
@@ -119,17 +129,23 @@ div#Navigation{
         	div.child{ display: block; }
       	}
       	div.child{
-      		z-index: -10;
       		top: 71px;
       		left: 0px;
       		width: 100%;
       		height: 250px;
       		display: none;
-      		padding-right:0;
     			position: absolute;
-      		background-color: $white;
-    			box-shadow: inset 0 0px 20.5px -10px rgba(90, 19, 17, 1);
+      		background-color: $offwhite;
       		&:hover{ display:block; }
+          .sub-nav{
+            width:100%;
+            height:100%;
+            padding:25px;
+            text-align: left;
+            -webkit-box-shadow: 1px 13px 20px -4px rgba(0,0,0,0.22);
+            -moz-box-shadow: 1px 13px 20px -4px rgba(0,0,0,0.22);
+            box-shadow: 1px 13px 20px -4px rgba(0,0,0,0.22);
+          }
       	}
 
     	}
@@ -167,19 +183,40 @@ div#Navigation{
 footer#Footer{
 	bottom: 0px;
   width: 100%;
-  height: 300px;
-  position:absolute;
-  background-color: $infectious_red;
+  height: 400px;
+  padding: 0;
+ // position:absolute;
+  background-color: $dark_gray;
+  div.lead{
+    width:100%;
+    height: auto;
+    padding: 10px 25px;
+    background-color: $offwhite;
+    text-align: center;
+    h1{
+      color: $infectious_red;
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      line-height: 3.5rem;
+    }
+  }
   div.social{
   	width: 100%;
   	height: 70px;
-  	padding: 10px 25px 10px 25px;
-  	background-color: $dark_gray;
-  	box-shadow: 0px 0.5px 20px 0px $light_green;
+    white-space: nowrap;
+  	padding: 10px 0px;
+  	background-color: $infectious_red;
+    -webkit-box-shadow: 5px 9px 43px -10px rgba(0,0,0,1);
+    -moz-box-shadow: 5px 9px 43px -10px rgba(0,0,0,1);
+    box-shadow: 5px 9px 43px -10px rgba(0,0,0,1);
   	div.social-media{
   		width: 50%;
   		height: 100%;
   		display: inline-block;
+      margin: 0;
+      line-height: 0;
+      padding: 0px 25px;
 	  	a.social-icon-link{
 	  		border-radius: 25px;
 		  	img.social-icon{
@@ -188,18 +225,48 @@ footer#Footer{
 		  		font-size: .7em;
 					line-height: 40px;
 		  		margin-right: 12.5px;
+          -webkit-box-shadow: 5px 9px 43px -10px rgba(0,0,0,1);
+          -moz-box-shadow: 5px 9px 43px -10px rgba(0,0,0,1);
+          box-shadow: 5px 9px 43px -10px rgba(0,0,0,1);
 		  	}
 	  	}
 	  }
 	  div.subscribe{
-	  	width: 49%;
+	  	width: 50%;
   		height: 100%;
   		display: inline-block;
+      padding: 0px 25px;
   		form.sub-form{
-
+        padding:3px 0px;
+        input{ 
+          font-size: 1rem;
+          border: none;
+          width:250px;
+          height: 40px;
+          padding: 10px;
+          float:left;
+        }
+        button{ font-size: 1rem; }
   		}
-
 	  }
   }
+}
 
+
+//*************************************//
+//            Jumbotron
+//*************************************//
+div.jumbotron{
+  width: 100%;
+  color: red;
+  height: 100%;
+  div.hero-home{
+    height: 518.60px;
+    background-color: red;
+  }
+  div.jumbotron-footer{
+    width: 100%;
+    height: 250px;
+    background-color: black;
+  }
 }

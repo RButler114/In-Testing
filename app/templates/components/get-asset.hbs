@@ -1,0 +1,7 @@
+<picture>
+	{{#each sources as |image|}}
+    <source media="{{image.size}}" srcset="{{image.src}}">
+  {{/each}}
+  <img src="{{asset.src}}" class="{{asset.className}}" title={{asset.title}} alt={{asset.title}} />
+</picture
+{{yield}}
